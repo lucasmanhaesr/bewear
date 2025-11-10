@@ -1,4 +1,4 @@
-import { integer, pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { integer, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm/relations";
 
 export const userTable = pgTable('user', {
@@ -14,7 +14,7 @@ export const categoryTable = pgTable('category', {
 });
 
 export const categoryRelations = relations(categoryTable, (params) => {
-    return{
+    return {
         products: params.many(productTable),
     };
 });
@@ -29,7 +29,7 @@ export const productTable = pgTable('product', {
 });
 
 export const productRelations = relations(productTable, (params) => {
-    return{
+    return {
         category: params.one(categoryTable, {
             fields: [productTable.categoryId],
             references: [categoryTable.id],
@@ -49,7 +49,7 @@ export const productVariantTable = pgTable('product_variant', {
 });
 
 export const productVariantRelations = relations(productVariantTable, (params) => {
-    return{
+    return {
         product: params.one(productTable, {
             fields: [productVariantTable.productId],
             references: [productTable.id],
