@@ -1,13 +1,16 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 
     const formSchema = z.object({
         name: z.string().trim().min(1, { message: "Nome é obrigatório" }),
@@ -25,6 +28,8 @@ import { Input } from "@/components/ui/input";
 
     const SignOutForm = () => {
 
+        const router = useRouter();
+
         const form = useForm<z.infer<typeof formSchema>>({
             resolver: zodResolver(formSchema),
             defaultValues: {
@@ -35,9 +40,25 @@ import { Input } from "@/components/ui/input";
             },
         });
 
-        function onSubmit(values: FormValues) {
-            console.log("FORMULARIO VALIDO E ENVIADO");
-            console.log(values);
+        async function onSubmit(values: FormValues) {
+            await authClient.signUp.email({
+                name: values.name,
+                email: values.email,
+                password: values.password,                                          
+                fetchOptions: {
+                    onSuccess: () => {
+                        toast.success("Usuário criado com sucesso");
+                        router.push("/");
+                    },
+                    onError: (error) => {
+                        if(error.error.code === "USER_ALREADY_EXISTS") {
+                            toast.error("E-mail já cadastrado");
+                            form.setError("email", {message: "E-mail já cadastrado"});
+                        }
+                        toast.error(`Erro ao criar usuário, Erro: ${error.error.message}`);
+                    },
+                }
+            });
         }
 
         return (
