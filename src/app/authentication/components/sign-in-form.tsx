@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { z } from "zod";
+import { email, z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -47,18 +47,25 @@ import { authClient } from "@/lib/auth-client";
         });
 
         async function onSubmit(values: FormValues) {
-            const { data } = await authClient.signIn.email({
+            await authClient.signIn.email({
                 email: values.email,
                 password: values.password,
                 fetchOptions: {
                     onSuccess: () => {
-                    toast.success("Login efeutado com sucesso");
-                    router.push("/");
+                        toast.success("Login efeutado com sucesso");
+                        router.push("/");
                     },
                     onError: (error) => {
-                        if(error.error.code === "INVALID_EMAIL_OR_PASSWORD"){
-                            toast.error("E-mail ou senha inválida")   
+                        if(error.error.code === "USER_NOT_FOUND"){
+                            toast.error("E-mail não encontrado")   
+                            return form.setError("email", { message: "E-mail não enconstrado" })
                         }
+                        if(error.error.code === "INVALID_EMAIL_OR_PASSWORD"){
+                            toast.error("E-mail ou senha inválida")
+                            form .setError("email", { message: "E-mail ou senha inválida" })   
+                            return form.setError("password", { message: "E-mail ou senha inválida" })
+                        }
+                        toast.error(`Erro ao criar usuário, Erro: ${error.error.message}`);
                     }
                 },
             });
