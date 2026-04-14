@@ -1,17 +1,26 @@
-## Introdução
+## Build e run
 
-Primeiro, execute o servidor de desenvolvimento:
+Executar o servidor de desenvolvimento:
 
 ```bash
 npm run dev
-# ou
-yarn dev
-# ou
-pnpm dev
-# ou
-bun dev
 ```
 
-Abrir [http://localhost:3000](http://localhost:3000) use seu navegador para visualizar o resultado.
+Abrir com seu navegador [http://localhost:3000](http://localhost:3000) hot reload habilitado
 
-Você pode começar a editar a página incial modificando o arquivo `app/page.tsx`. A página é atualizada automaticamente conforme você edita o arquivo.
+Build do projeto
+```bash
+npm run build
+```
+
+## Container PostgreSQL
+
+Build da imagem:
+```bash
+docker build -t postgres .
+```
+
+Rodar container do PostgreSQL
+```bash
+docker run -d -p 5432:5432 --name postgres-db postgres
+```
