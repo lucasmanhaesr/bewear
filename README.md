@@ -1,4 +1,4 @@
-## Build e run
+## Build e Run
 
 Executar o servidor de desenvolvimento:
 
@@ -22,5 +22,17 @@ docker build -t postgres .
 
 Rodar container do PostgreSQL
 ```bash
-docker run -d -p 5432:5432 --name postgres-db postgres
+docker run --name postgres-db -d -p 5432:5432 postgres
+```
+
+## Drizzle ORM
+
+Gerar/aplicar schema do banco de dados
+```bash
+npx drizzle-kit push
+```
+
+Abrir interface gráfica do banco de dados com Drizzle
+```bash
+npx drizzle-kit studio
 ```

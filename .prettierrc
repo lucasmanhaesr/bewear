@@ -1,6 +1,5 @@
 {
     "plugins": ["prettier-plugin-tailwindcss"],
     "tabWidth": 4,
-    "endOfLine": "auto",
-    "whitespaceSensitivity": "ignore"
+    "endOfLine": "auto"
 }
