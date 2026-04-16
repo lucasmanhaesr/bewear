@@ -1,23 +1,79 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 
 import { cn } from "@/lib/utils";
 
-const jetbrainsMono = JetBrains_Mono({
-    subsets: ["latin"],
-    variable: "--font-mono",
+const sfPro = localFont({
+  src: [
+    {
+      path: "../fonts/sf-pro/SFProRegular.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../fonts/sf-pro/SFProMedium.otf",
+      weight: "500",
+    },
+    {
+      path: "../fonts/sf-pro/SFProBold.otf",
+      weight: "700",
+    },
+    {
+      path: "../fonts/sf-pro/SFProRegularItalic.otf",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "../fonts/sf-pro/SFProMediumItalic.otf",
+      weight: "500",
+      style: "italic",
+    },
+    {
+      path: "../fonts/sf-pro/SFProBoldItalic.otf",
+      weight: "700",
+      style: "italic",
+    },
+  ],
+  variable: "--font-sans",
+  display: "swap",
+  fallback: ["system-ui", "Arial"],
 });
-
-const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
-    subsets: ["latin"],
+  
+const sfMono = localFont({
+  src: [
+    {
+      path: "../fonts/sf-mono/SFMonoRegular.otf",
+      weight: "400",
+    },
+    {
+      path: "../fonts/sf-mono/SFMonoMedium.otf",
+      weight: "500",
+    },
+    {
+      path: "../fonts/sf-mono/SFMonoBold.otf",
+      weight: "700",
+    },
+    {
+      path: "../fonts/sf-mono/SFMonoRegularItalic.otf",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "../fonts/sf-mono/SFMonoMediumItalic.otf",
+      weight: "500",
+      style: "italic",
+    },
+    {
+      path: "../fonts/sf-mono/SFMonoBoldItalic.otf",
+      weight: "700",
+      style: "italic",
+    },
+  ],
+  variable: "--font-mono",
+  display: "swap",
+  fallback: ["monospace"],
 });
 
 export const metadata: Metadata = {
@@ -36,10 +92,8 @@ export default function RootLayout({
             className={cn(
                 "h-full",
                 "antialiased",
-                geistSans.variable,
-                geistMono.variable,
-                "font-mono",
-                jetbrainsMono.variable,
+                sfPro.variable,
+                sfMono.variable
             )}
         >
             <body className="flex min-h-full flex-col">{children}</body>

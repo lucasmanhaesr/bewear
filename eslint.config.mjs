@@ -4,6 +4,7 @@ import nextTs from "eslint-config-next/typescript";
 import prettierConfig from "eslint-config-prettier";
 import prettierPlugin from "eslint-plugin-prettier";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
+import unusedImports from "eslint-plugin-unused-imports";
 
 const eslintConfig = defineConfig([
     ...nextVitals,
@@ -13,11 +14,13 @@ const eslintConfig = defineConfig([
         plugins: {
             prettier: prettierPlugin,
             "simple-import-sort": simpleImportSort.default ?? simpleImportSort,
+            "unused-imports": unusedImports,
         },
         rules: {
             "prettier/prettier": "off",
             "simple-import-sort/imports": "error",
             "simple-import-sort/exports": "error",
+            "unused-imports/no-unused-imports": "error",
         },
     },
 
