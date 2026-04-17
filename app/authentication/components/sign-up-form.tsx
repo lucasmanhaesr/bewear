@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
+import { authorizationCodeRequest } from "better-auth";
 
 type formValues = z.infer<typeof formSchema>;
 
@@ -70,9 +71,11 @@ const SignUpForm = () => {
                     router.push("/");
                 },
                 onError: (error) => {
-                    toast.error(
-                        `Não foi possível criar a conta, erro: ${error.error.message}`,
-                    );
+                    if(error.error.code = authClient.$ERROR_CODES.USER_ALREADY_EXISTS){
+                        toast.error(`Email já cadastrado `)
+                        form.setError("email", { message: "E-mail já cadastrado" })
+                    }
+                    toast.error(error.error.message)
                 },
             },
         });
