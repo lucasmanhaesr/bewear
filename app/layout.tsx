@@ -3,6 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
+import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 
 const sfPro = localFont({
@@ -96,7 +97,10 @@ export default function RootLayout({
                 sfMono.variable
             )}
         >
-            <body className="flex min-h-full flex-col">{children}</body>
+            <body className="flex min-h-full flex-col">
+              {children}
+              <Toaster />
+              </body>
         </html>
     );
 }
