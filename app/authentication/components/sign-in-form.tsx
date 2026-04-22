@@ -54,7 +54,15 @@ const SignInForm = () => {
                     router.push("/");
                 },
                 onError: (error) => {
-                    toast.error(error.error.message);
+                    if(error.error.code = authClient.$ERROR_CODES.INVALID_EMAIL_OR_PASSWORD){
+                        toast.error("E-mail ou senha inválidos");
+                        form.setError("email", {
+                            message: "E-mail ou senha inválidos"
+                        })
+                    }
+                    else{
+                        toast.error(error.error.message);
+                    }
                 }
             }
         });
