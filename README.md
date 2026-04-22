@@ -27,6 +27,11 @@ docker run --name postgres-db -d -p 5432:5432 postgres
 
 ## Drizzle ORM
 
+Criar seed no banco
+```bash
+DOTENV_CONFIG_PATH=.env npx tsx db/seed.ts
+```
+
 Gerar/aplicar schema do banco de dados
 ```bash
 npx drizzle-kit push
