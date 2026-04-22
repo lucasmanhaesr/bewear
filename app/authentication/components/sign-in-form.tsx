@@ -1,7 +1,9 @@
 'use client'
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import z from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -22,6 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 
 type formValues = z.infer<typeof formSchema>;
 
@@ -31,6 +34,8 @@ const formSchema = z.object({
 })
 
 const SignInForm = () => {
+
+    const router = useRouter();
     
     const form = useForm<formValues>({
         resolver: zodResolver(formSchema),
@@ -40,9 +45,19 @@ const SignInForm = () => {
         },
     })
 
-    function onSubmit(values: formValues){
-        console.log("FORMULÁRIO VÁLIDO E ENVIADO!")
-        console.log(values)
+    async function onSubmit(values: formValues){
+        await authClient.signIn.email({
+            email: values.email,
+            password: values.password,
+            fetchOptions: {
+                onSuccess: () => {
+                    router.push("/");
+                },
+                onError: (error) => {
+                    toast.error(error.error.message);
+                }
+            }
+        });
     }
     
     return ( 
