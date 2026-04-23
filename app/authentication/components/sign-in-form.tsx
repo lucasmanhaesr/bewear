@@ -45,7 +45,7 @@ const SignInForm = () => {
         },
     })
 
-    async function onSubmit(values: formValues){
+    const onSubmit = async (values: formValues) => {
         await authClient.signIn.email({
             email: values.email,
             password: values.password,
@@ -65,6 +65,12 @@ const SignInForm = () => {
                     }
                 }
             }
+        });
+    }
+
+    const handleSignInWithGoogle = async () => {
+        await authClient.signIn.social({
+            provider: "google",
         });
     }
     
@@ -117,7 +123,7 @@ const SignInForm = () => {
                             <Button
                                 variant="outline"
                                 className="w-full"
-                                // onClick={handleSignInWithGoogle}
+                                onClick={handleSignInWithGoogle}
                                 type="button"
                             >
                                 <svg viewBox="0 0 24 24" className="h-4 w-4">
